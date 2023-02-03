@@ -1,8 +1,8 @@
-class SignInUser {
+class TsignInUser {
   final String email;
   final String password;
 
-  SignInUser({
+  TsignInUser({
     required this.email,
     required this.password,
   });

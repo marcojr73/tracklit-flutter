@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tracklit_flutter/states/authPage.dart';
+import 'package:tracklit_flutter/states/authBlock.dart';
 import 'package:tracklit_flutter/widgets/auth/formSignIn.dart';
 import 'package:tracklit_flutter/widgets/auth/formSignUp.dart';
 

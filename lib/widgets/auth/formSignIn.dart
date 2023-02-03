@@ -16,7 +16,7 @@ class FormSignIn extends StatelessWidget {
     final isValid = formKey.currentState?.validate() ?? false; 
 
     formKey.currentState?.save();
-    final user = SignInUser(
+    final user = TsignInUser(
         email: formData["email"] as String,
         password: formData["password"] as String);
   }

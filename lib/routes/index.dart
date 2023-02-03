@@ -8,8 +8,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tracklit_flutter/states/authPage.dart';
+import 'package:tracklit_flutter/pages/habitsPage.dart';
+import 'package:tracklit_flutter/states/authBlock.dart';
 import 'package:tracklit_flutter/pages/authPage.dart';
+import 'package:tracklit_flutter/states/habitsBloc.dart';
 
 class AppRouter {
   BuildContext context;
@@ -20,10 +22,17 @@ class AppRouter {
 
     List routes = [
       {
-        "path": "/",
+        "path": "/auth",
         "page": BlocProvider(
           create: (context) => ToggleBloc(),
           child: const AuthPage(),
+        ),
+      },
+      {
+        "path": "/",
+        "page": BlocProvider(
+          create: (context) => ShowHabits(),
+          child: const HabitsPage(),
         ),
       },
     ];

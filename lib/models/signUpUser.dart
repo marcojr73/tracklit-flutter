@@ -1,13 +1,13 @@
-class SignUpUser {
+class TsignUpUser {
   final String email;
   final String password;
   final String name;
-  final String picture;
+  final String image;
 
-  SignUpUser({
+  TsignUpUser({
     required this.email,
     required this.password,
     required this.name,
-    required this.picture
+    required this.image
   });
 }

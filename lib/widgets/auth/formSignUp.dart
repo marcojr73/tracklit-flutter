@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:tracklit_flutter/models/signInUser.dart';
+import 'package:tracklit_flutter/models/signUpUser.dart';
+import 'package:tracklit_flutter/repositories/authUser/index.dart';
 import 'package:tracklit_flutter/utils/validators/index.dart';
 import 'package:tracklit_flutter/widgets/auth/inputForm.dart';
 
@@ -11,14 +13,17 @@ class FormSignUp extends StatelessWidget {
   var formData = <String, String>{};
   final formKey = GlobalKey<FormState>();
 
-  void signUp() {
-    formKey.currentState?.validate() ?? false;
+  void signUp() async {
+    // formKey.currentState?.validate() ?? false;
 
     formKey.currentState?.save();
 
-    final user = SignInUser(
+    final user = TsignUpUser(
         email: formData["email"] as String,
-        password: formData["password"] as String);
+        password: formData["password"] as String,
+        name: formData["name"] as String,
+        image: formData["image"] as String);
+    final response = await signUpUser(user);
   }
 
   @override
