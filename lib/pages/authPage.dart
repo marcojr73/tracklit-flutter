@@ -13,25 +13,30 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: BlocBuilder<ToggleBloc, bool>(
-          builder: (context, state) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset("assets/images/logo.png"),
-                state ? FormSignIn() : FormSignUp(),
-                SizedBox(
-                  height: MediaQuery.of(context).size.width * 0.1,
-                ),
-                TextButton(
-                    onPressed: () {
-                      BlocProvider.of<ToggleBloc>(context).add(Toggle());
-                    },
-                    child: Text(toSignUp))
-              ],
-            );
-          },
+      body: SingleChildScrollView(
+        child: Center(
+          child: BlocBuilder<ToggleBloc, bool>(
+            builder: (context, state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Image.asset("assets/images/logo.png"),
+                  ),
+                  state ? FormSignIn() : FormSignUp(),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.1,
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        BlocProvider.of<ToggleBloc>(context).add(Toggle());
+                      },
+                      child: Text(toSignUp))
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

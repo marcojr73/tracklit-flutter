@@ -1,9 +1,12 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:tracklit_flutter/models/signInUser.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tracklit_flutter/models/signUpUser.dart';
 import 'package:tracklit_flutter/repositories/authUser/index.dart';
+import 'package:tracklit_flutter/states/authBlock.dart';
+import 'package:tracklit_flutter/utils/toasts/index.dart';
 import 'package:tracklit_flutter/utils/validators/index.dart';
 import 'package:tracklit_flutter/widgets/auth/inputForm.dart';
 
@@ -13,9 +16,8 @@ class FormSignUp extends StatelessWidget {
   var formData = <String, String>{};
   final formKey = GlobalKey<FormState>();
 
-  void signUp() async {
-    // formKey.currentState?.validate() ?? false;
-
+  void signUp(context) async {
+    formKey.currentState?.validate() ?? false;
     formKey.currentState?.save();
 
     final user = TsignUpUser(
@@ -24,6 +26,9 @@ class FormSignUp extends StatelessWidget {
         name: formData["name"] as String,
         image: formData["image"] as String);
     final response = await signUpUser(user);
+    if (response == 200) {
+      BlocProvider.of<ToggleBloc>(context).add(Toggle());
+    }
   }
 
   @override
@@ -55,16 +60,20 @@ class FormSignUp extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.8,
           height: MediaQuery.of(context).size.height * 0.05,
           margin: const EdgeInsets.only(top: 40),
-          child: ElevatedButton(
-            onPressed: () => signUp(),
-            style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(
-                  Theme.of(context).colorScheme.secondary),
-            ),
-            child: const Text(
-              'Log-in',
-              style: TextStyle(color: Colors.white, fontSize: 22),
-            ),
+          child: BlocBuilder<ToggleBloc, bool>(
+            builder: (context, state) {
+              return ElevatedButton(
+                onPressed: () => signUp(context),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll<Color>(
+                      Theme.of(context).colorScheme.secondary),
+                ),
+                child: const Text(
+                  'Log-in',
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                ),
+              );
+            },
           ),
         ),
       ]),

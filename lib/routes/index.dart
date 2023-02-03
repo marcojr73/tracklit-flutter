@@ -22,14 +22,14 @@ class AppRouter {
 
     List routes = [
       {
-        "path": "/auth",
+        "path": "/",
         "page": BlocProvider(
           create: (context) => ToggleBloc(),
           child: const AuthPage(),
         ),
       },
       {
-        "path": "/",
+        "path": "/habits",
         "page": BlocProvider(
           create: (context) => ShowHabits(),
           child: const HabitsPage(),

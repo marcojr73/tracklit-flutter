@@ -4,7 +4,7 @@ import 'package:tracklit_flutter/routes/index.dart';
 import 'package:tracklit_flutter/utils/colors/index.dart';
 
 void main() async {
-  await DotEnv().load(fileName: ".env");
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
