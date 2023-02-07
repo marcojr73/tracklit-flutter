@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tracklit_flutter/models/signInUser.dart';
 import 'package:tracklit_flutter/models/signUpUser.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,12 +22,26 @@ Future signUpUser(TsignUpUser user) async {
         "image": user.image,
         "password": user.password
       }));
-      print(response.statusCode);
-      print(response.body);
       if(response.statusCode != 201) {
-        showToast("Dados enviados incorretamente");
+        // showToast("Dados enviados incorretamente");
       } else {
         showToast("Sucesso");
+        return 200;
+      }
+}
+
+Future signInUser(TsignInUser user) async {
+  final apiUrl = dotenv.env["APIURL"];
+  final response = await http.post(Uri.parse("$apiUrl/auth/login"),
+      headers: {"Content-type": "application/json"},
+      body: jsonEncode({
+        "email": user.email,
+        "password": user.password
+      }));
+      if(response.statusCode != 200) {
+        // showToast("Dados enviados incorretamente");
+      } else {
+        // showToast("Sucesso");
         return 200;
       }
 }

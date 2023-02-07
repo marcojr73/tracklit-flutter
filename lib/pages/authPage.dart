@@ -13,11 +13,11 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: BlocBuilder<ToggleBloc, bool>(
-            builder: (context, state) {
-              return Column(
+      body: Center(
+        child: BlocBuilder<ToggleBloc, bool>(
+          builder: (context, state) {
+            return SingleChildScrollView(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
@@ -34,9 +34,9 @@ class AuthPage extends StatelessWidget {
                       },
                       child: Text(toSignUp))
                 ],
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

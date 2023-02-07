@@ -13,11 +13,3 @@ class ShowHabits extends Bloc<HabitsState, bool>{
   }
   
 }
-
-class DaysSelecteds extends Bloc<HabitsState, List<String>>{
-
-  DaysSelecteds(): super([]){
-    on<HabitsBloc>((event, emit) => emit(state));
-  }
-  
-}

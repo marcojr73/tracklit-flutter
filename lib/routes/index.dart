@@ -8,7 +8,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tracklit_flutter/pages/habitsPage.dart';
+import 'package:tracklit_flutter/pages/HomePage.dart';
+import 'package:tracklit_flutter/widgets/habits/index.dart';
 import 'package:tracklit_flutter/states/authBlock.dart';
 import 'package:tracklit_flutter/pages/authPage.dart';
 import 'package:tracklit_flutter/states/habitsBloc.dart';
@@ -17,23 +18,23 @@ class AppRouter {
   BuildContext context;
   AppRouter(this.context);
 
+  static const signUp = "/";
+  static const home = "/home";
+
   Map<String, Widget Function(BuildContext)> getRoutes() {
     Map<String, Widget Function(BuildContext)> routesToReturn = {};
 
     List routes = [
       {
-        "path": "/",
+        "path": signUp,
         "page": BlocProvider(
           create: (context) => ToggleBloc(),
           child: const AuthPage(),
         ),
       },
       {
-        "path": "/habits",
-        "page": BlocProvider(
-          create: (context) => ShowHabits(),
-          child: const HabitsPage(),
-        ),
+        "path": home,
+        "page": const HomePage(),
       },
     ];
 
