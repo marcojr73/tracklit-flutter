@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tracklit_flutter/models/signInUser.dart';
 import 'package:tracklit_flutter/repositories/authUser/index.dart';
 import 'package:tracklit_flutter/routes/index.dart';
+import 'package:tracklit_flutter/utils/toasts/index.dart';
 import 'package:tracklit_flutter/utils/validators/index.dart';
 
 class FormSignIn extends StatelessWidget {
@@ -15,16 +16,18 @@ class FormSignIn extends StatelessWidget {
 
   void signIn(context) async {
     // final isValid = formKey.currentState?.validate() ?? false; 
-
     formKey.currentState?.save();
-    // final user = TsignInUser(
-    //     email: formData["email"] as String,
-    //     password: formData["password"] as String);
-    // final response = await signInUser(user);
-    // print(response);
-    // if (response == 200) {
+
+    final user = TsignInUser(
+        email: formData["email"] as String,
+        password: formData["password"] as String);
+    final response = await signInUser(user);
+    if (response.statusCode == 200) {
+      showToast("Sucesso");
       Navigator.of(context).pushNamed(AppRouter.home);
-    // }
+    } else {
+      showSnackBar(context, response.body["message"]);
+    }
   }
 
   @override

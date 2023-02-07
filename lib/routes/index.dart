@@ -28,7 +28,7 @@ class AppRouter {
       {
         "path": signUp,
         "page": BlocProvider(
-          create: (context) => ToggleBloc(),
+          create: (context) => TogglePage(),
           child: const AuthPage(),
         ),
       },

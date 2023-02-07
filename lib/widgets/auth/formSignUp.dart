@@ -17,7 +17,7 @@ class FormSignUp extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   void signUp(context) async {
-    formKey.currentState?.validate() ?? false;
+    // formKey.currentState?.validate() ?? false;
     formKey.currentState?.save();
 
     final user = TsignUpUser(
@@ -26,8 +26,11 @@ class FormSignUp extends StatelessWidget {
         name: formData["name"] as String,
         image: formData["image"] as String);
     final response = await signUpUser(user);
-    if (response == 200) {
-      BlocProvider.of<ToggleBloc>(context).add(Toggle());
+    if (response.statusCode == 201) {
+      BlocProvider.of<TogglePage>(context).add(AuthInitial());
+      showToast("Sucesso");
+    } else {
+      showSnackBar(context, response.body["message"]);
     }
   }
 
@@ -60,7 +63,7 @@ class FormSignUp extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.8,
           height: MediaQuery.of(context).size.height * 0.05,
           margin: const EdgeInsets.only(top: 40),
-          child: BlocBuilder<ToggleBloc, bool>(
+          child: BlocBuilder<TogglePage, bool>(
             builder: (context, state) {
               return ElevatedButton(
                 onPressed: () => signUp(context),

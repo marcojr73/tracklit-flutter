@@ -17,7 +17,7 @@ class NewHabit extends StatelessWidget {
     return Center(
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.20,
+        height: MediaQuery.of(context).size.height * 0.3,
         color: Theme.of(context).colorScheme.tertiary,
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [

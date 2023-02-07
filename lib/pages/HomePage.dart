@@ -14,22 +14,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedScreenIndex = 1;
-  final List<Map<String, Object>> screens = [
-    {"title": "Habits", "screen": const Today()},
-    {
-      "title": "Habits",
-      "screen": BlocProvider(
-        create: (context) => ShowHabits(),
-        child: const Habits(),
-      )
-    },
-    {"title": "Habits", "screen": const Historic()},
-  ];
+  late PageController pageController; 
 
-  selectScreen(int index) {
-    setState(() {
-      selectedScreenIndex = index;
-    });
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController(initialPage: selectedScreenIndex);
   }
 
   @override
@@ -51,9 +41,26 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        body: screens[selectedScreenIndex].cast()["screen"],
+        body: PageView(
+          controller: pageController,
+          children: [
+            const Today(),
+            BlocProvider(
+              create: (context) => ShowHabits(),
+              child: const Habits(),
+            ),
+            const Historic(),
+          ],
+          onPageChanged: (page) {
+            setState(() {
+              selectedScreenIndex = page;
+            });
+          },
+        ),
         bottomNavigationBar: BottomNavigationBar(
-          onTap: selectScreen,
+          onTap: (page) {
+            pageController.animateToPage(page, duration: const Duration(milliseconds: 400), curve: Curves.ease);
+          },
           backgroundColor: Theme.of(context).colorScheme.tertiary,
           unselectedItemColor: Colors.grey,
           selectedItemColor: Theme.of(context).colorScheme.primary,

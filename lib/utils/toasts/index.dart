@@ -10,3 +10,8 @@ void showToast(String message) {
       textColor: Colors.white,
       fontSize: 16.0);
 }
+
+void showSnackBar(context, String message) {
+  ScaffoldMessenger.of(context)
+      .showSnackBar(SnackBar(content: Text(message)));
+}
