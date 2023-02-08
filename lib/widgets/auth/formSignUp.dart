@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tracklit_flutter/models/signUpUser.dart';
 import 'package:tracklit_flutter/repositories/authUser/index.dart';
 import 'package:tracklit_flutter/states/authBlock.dart';
@@ -27,7 +26,7 @@ class FormSignUp extends StatelessWidget {
         image: formData["image"] as String);
     final response = await signUpUser(user);
     if (response.statusCode == 201) {
-      BlocProvider.of<TogglePage>(context).add(AuthInitial());
+      BlocProvider.of<AuthBloc>(context).add(TogglePage());
       showToast("Sucesso");
     } else {
       showSnackBar(context, response.body["message"]);
@@ -63,7 +62,7 @@ class FormSignUp extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.8,
           height: MediaQuery.of(context).size.height * 0.05,
           margin: const EdgeInsets.only(top: 40),
-          child: BlocBuilder<TogglePage, bool>(
+          child: BlocBuilder<AuthBloc, bool>(
             builder: (context, state) {
               return ElevatedButton(
                 onPressed: () => signUp(context),
@@ -72,7 +71,7 @@ class FormSignUp extends StatelessWidget {
                       Theme.of(context).colorScheme.secondary),
                 ),
                 child: const Text(
-                  'Log-in',
+                  "Cadastrar",
                   style: TextStyle(color: Colors.white, fontSize: 22),
                 ),
               );

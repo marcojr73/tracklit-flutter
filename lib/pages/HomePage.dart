@@ -27,10 +27,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 75,
+          automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Tracklit"),
+              const Text("Tracklit", style: TextStyle(fontFamily: "Playball", fontSize: 40),),
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(100)),
                 child: Image.asset(
@@ -44,11 +45,11 @@ class _HomePageState extends State<HomePage> {
         body: PageView(
           controller: pageController,
           children: [
-            const Today(),
             BlocProvider(
-              create: (context) => ShowHabits(),
+              create: (context) => HabitsBloc(),
               child: const Habits(),
             ),
+            const Today(),
             const Historic(),
           ],
           onPageChanged: (page) {

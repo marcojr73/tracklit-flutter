@@ -1,15 +1,16 @@
-import 'dart:ffi';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class HabitsState {}
+abstract class HabitsState { }
 
-class HabitsBloc extends HabitsState{}
+class ToggleNewHabits extends HabitsState{ }
 
-class ShowHabits extends Bloc<HabitsState, bool>{
-  
-  ShowHabits(): super(false){
-    on<HabitsBloc>((event, emit) => emit(!state));
+class SetDayHabit extends HabitsState { }
+
+class HabitsBloc extends Bloc<HabitsState, bool>{
+
+  HabitsBloc(): super(false){
+    on<ToggleNewHabits>((event, emit) => emit(!state));
   }
   
 }

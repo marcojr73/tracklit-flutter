@@ -18,16 +18,15 @@ class FormSignIn extends StatelessWidget {
     // final isValid = formKey.currentState?.validate() ?? false; 
     formKey.currentState?.save();
 
-    final user = TsignInUser(
-        email: formData["email"] as String,
-        password: formData["password"] as String);
-    final response = await signInUser(user);
-    if (response.statusCode == 200) {
-      showToast("Sucesso");
+    // final user = TsignInUser(
+    //     email: formData["email"] as String,
+    //     password: formData["password"] as String);
+    // final response = await signInUser(user);
+    // if (response.statusCode == 200) {
       Navigator.of(context).pushNamed(AppRouter.home);
-    } else {
-      showSnackBar(context, response.body["message"]);
-    }
+    // } else {
+      // showSnackBar(context, response.body["message"]);
+    // }
   }
 
   @override
@@ -79,7 +78,7 @@ class FormSignIn extends StatelessWidget {
                   Theme.of(context).colorScheme.secondary),
             ),
             child: const Text(
-              'Log-in',
+              "Login",
               style: TextStyle(color: Colors.white, fontSize: 22),
             ),
           ),

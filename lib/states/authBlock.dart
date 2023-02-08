@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class AuthState {}
+abstract class AuthState { }
 
-class AuthInitial extends AuthState{}
+class TogglePage extends AuthState{ }
 
-class TogglePage extends Bloc<AuthState, bool>{
-  
-  TogglePage(): super(true){
-    on<AuthInitial>((event, emit) => emit(!state));
+class AuthBloc extends Bloc<AuthState, bool>{
+
+  AuthBloc(): super(true){
+    on<TogglePage>((event, emit) => emit(!state));
   }
   
 }

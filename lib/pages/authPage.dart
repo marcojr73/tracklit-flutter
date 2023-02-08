@@ -14,7 +14,7 @@ class AuthPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: BlocBuilder<TogglePage, bool>(
+        child: BlocBuilder<AuthBloc, bool>(
           builder: (context, state) {
             return SingleChildScrollView(
               child: Column(
@@ -30,9 +30,9 @@ class AuthPage extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () {
-                        BlocProvider.of<TogglePage>(context).add(AuthInitial());
+                        BlocProvider.of<AuthBloc>(context).add(TogglePage());
                       },
-                      child: Text(toSignUp))
+                      child: Text(state ? toSignUp : toSignIn))
                 ],
               ),
             );

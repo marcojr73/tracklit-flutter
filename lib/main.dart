@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
             primary: AppColors.primaryColor,
             secondary: AppColors.secondaryColor,
             tertiary: AppColors.lightColor),
+            fontFamily: "Lexend Deca"
       ),
       routes: AppRouter(context).getRoutes()
     );
