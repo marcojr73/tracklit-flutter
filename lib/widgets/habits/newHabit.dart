@@ -1,82 +1,175 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tracklit_flutter/states/habitsBloc.dart';
+import 'package:tracklit_flutter/blocs/newHabitsBloc/habitsBloc.dart';
+import 'package:tracklit_flutter/blocs/newHabitsBloc/habitsEvent.dart';
+import 'package:tracklit_flutter/blocs/newHabitsBloc/habitsState.dart';
+import 'package:tracklit_flutter/models/postHabitModel.dart';
+import 'package:tracklit_flutter/repositories/habits/index.dart';
+import 'package:tracklit_flutter/utils/toasts/index.dart';
 import 'package:tracklit_flutter/widgets/habits/day.dart';
 
-class NewHabit extends StatelessWidget {
-  NewHabit({super.key});
+class NewHabit extends StatefulWidget {
+  NewHabit({super.key, required this.toggleShowHabits});
 
+  void Function() toggleShowHabits;
+
+  @override
+  State<NewHabit> createState() => _NewHabitState();
+}
+
+class _NewHabitState extends State<NewHabit> {
   var formData = <String, String>{};
+  final formKey = GlobalKey<FormState>();
 
-  final List<String> daysWeek = ["D", "S", "T", "Q", "Q", "S", "S"];
+  late final HabitsBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = HabitsBloc();
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
+  void upsertSelectedHabits(index) {
+    bloc.add(SelectDayHabitEvent(day: index));
+  }
+
+  void postHabit(List<int> days) async {
+    formKey.currentState?.validate() ?? false;
+    if (days.isEmpty) {
+      showSnackBar(context, "Selecione um ou mais dias");
+    } else {
+      formKey.currentState?.save();
+      final data = TpostHabit(name: formData["name"] as String, days: days);
+      final response = await postHabitApi(data);
+      if (response.statusCode == 201) {
+        showSnackBar(context, "sucesso");
+      } else {
+        showSnackBar(context, response.body["message"]);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.3,
-        color: Theme.of(context).colorScheme.tertiary,
-        child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: "Nome do hábito",
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.background,
+    return BlocBuilder<HabitsBloc, HabitsState>(
+      bloc: bloc,
+      builder: (context, state) {
+        List<int> days = state.days;
+        return Center(
+            child: Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.3,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  borderRadius: BorderRadius.circular(15),
                 ),
-              ),
-            ),
-            textInputAction: TextInputAction.next,
-            obscureText: false,
-            onSaved: (e) => formData["habit"] = e ?? "",
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Day(day: "D"),
-              Day(day: "S"),
-              Day(day: "T"),
-              Day(day: "Q"),
-              Day(day: "Q"),
-              Day(day: "S"),
-              Day(day: "S"),
-            ],
-          ),
-          BlocBuilder<HabitsBloc, bool>(
-            builder: (context, state) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        BlocProvider.of<HabitsBloc>(context)
-                            .add(ToggleNewHabits());
-                      },
-                      child: Text(
-                        "Cancelar",
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 15, left: 20),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          BlocProvider.of<HabitsBloc>(context)
-                              .add(ToggleNewHabits());
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.secondary),
-                        child: const Text("Salvar")),
-                  )
-                ],
-              );
-            },
-          )
-        ]),
-      ),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Form(
+                        key: formKey,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 20),
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              labelText: "Nome do hábito",
+                              border: OutlineInputBorder(),
+                            ),
+                            textInputAction: TextInputAction.send,
+                            obscureText: false,
+                            validator: (_e) {
+                              final e = _e ?? "";
+                              if (e.isEmpty) return "insira um valor válido";
+                              return null;
+                            },
+                            onSaved: (e) => formData["name"] = e ?? "",
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Day(
+                            day: "D",
+                            index: 1,
+                            isSelect: days.contains(1),
+                            upsertSelectedHabits: upsertSelectedHabits,
+                          ),
+                          Day(
+                            day: "S",
+                            index: 2,
+                            isSelect: days.contains(2),
+                            upsertSelectedHabits: upsertSelectedHabits,
+                          ),
+                          Day(
+                            day: "T",
+                            index: 3,
+                            isSelect: days.contains(3),
+                            upsertSelectedHabits: upsertSelectedHabits,
+                          ),
+                          Day(
+                            day: "Q",
+                            index: 4,
+                            isSelect: days.contains(4),
+                            upsertSelectedHabits: upsertSelectedHabits,
+                          ),
+                          Day(
+                            day: "Q",
+                            index: 5,
+                            isSelect: days.contains(5),
+                            upsertSelectedHabits: upsertSelectedHabits,
+                          ),
+                          Day(
+                            day: "S",
+                            index: 6,
+                            isSelect: days.contains(6),
+                            upsertSelectedHabits: upsertSelectedHabits,
+                          ),
+                          Day(
+                            day: "S",
+                            index: 7,
+                            isSelect: days.contains(7),
+                            upsertSelectedHabits: upsertSelectedHabits,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                widget.toggleShowHabits();
+                              },
+                              child: Text(
+                                "Cancelar",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 15, left: 20),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  postHabit(days);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                                child: const Text("Salvar")),
+                          )
+                        ],
+                      )
+                    ])));
+      },
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracklit_flutter/pages/HomePage.dart';
-import 'package:tracklit_flutter/states/authBlock.dart';
+import 'package:tracklit_flutter/blocs/authBlock.dart';
 import 'package:tracklit_flutter/pages/authPage.dart';
 
 class AppRouter {

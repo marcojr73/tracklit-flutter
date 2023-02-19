@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tracklit_flutter/states/habitsBloc.dart';
 
 class Day extends StatelessWidget {
-  const Day({super.key, required this.day});
+  Day(
+      {super.key,
+      required this.day,
+      required this.index,
+      required this.isSelect,
+      required this.upsertSelectedHabits});
 
   final String day;
+  final int index;
+  bool isSelect;
+  final void Function(int) upsertSelectedHabits;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HabitsBloc, bool>(
-      builder: (context, state) {
-        return SizedBox(
-          width: 45,
-          child: ElevatedButton(
-            onPressed: () {
-              BlocProvider.of<HabitsBloc>(context).add(SetDayHabit());
-            },
-            style: ElevatedButton.styleFrom(
-                backgroundColor: state
-                    ? Theme.of(context).colorScheme.background
-                    : Theme.of(context).colorScheme.tertiary,
+    return SizedBox(
+      width: 45,
+      height: 35,
+      child: ElevatedButton(
+        onPressed: () => upsertSelectedHabits(index),
+        style: isSelect
+            ? ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary)
+            : ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.tertiary,
                 side: BorderSide(
                     color: Theme.of(context).colorScheme.background, width: 2)),
-            child: Text(
-              day,
-              style: TextStyle(color: Theme.of(context).colorScheme.background),
-            ),
-          ),
-        );
-      },
+        child: Text(
+          day,
+          style: TextStyle(color: Theme.of(context).colorScheme.background),
+        ),
+      ),
     );
   }
 }

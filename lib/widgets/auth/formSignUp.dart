@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracklit_flutter/models/signUpUser.dart';
 import 'package:tracklit_flutter/repositories/authUser/index.dart';
-import 'package:tracklit_flutter/states/authBlock.dart';
+import 'package:tracklit_flutter/blocs/authBlock.dart';
 import 'package:tracklit_flutter/utils/toasts/index.dart';
 import 'package:tracklit_flutter/utils/validators/index.dart';
 import 'package:tracklit_flutter/widgets/auth/inputForm.dart';
