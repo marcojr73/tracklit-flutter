@@ -12,8 +12,10 @@ class NewHabitBloc extends Bloc<HabitsEvent, HabitsState> {
     on<ToggleHabitsEvent>((event, emit) {
       isShowNewHabits = !isShowNewHabits;
       if (isShowNewHabits) {
+        days = [];
         emit(ShowNewHabitsState());
       } else {
+        days = [];
         emit(HiddenNewHabitsState());
       }
     });

@@ -50,7 +50,7 @@ class _HabitsState extends State<Habits> {
               NewHabits(reload: reload,),
               state is LoadHabitsSucessState
                   ? SizedBox(
-                      height: 500,
+                      height: MediaQuery.of(context).size.height * 0.78,
                       child: AllHabits(
                         allHabits: state.allHabits,
                         reload: reload,
