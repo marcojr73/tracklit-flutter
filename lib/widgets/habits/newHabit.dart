@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tracklit_flutter/blocs/newHabitsBloc/habitsBloc.dart';
+import 'package:tracklit_flutter/blocs/newHabitsBloc/index.dart';
 import 'package:tracklit_flutter/blocs/newHabitsBloc/habitsEvent.dart';
 import 'package:tracklit_flutter/blocs/newHabitsBloc/habitsState.dart';
 import 'package:tracklit_flutter/models/postHabitModel.dart';
@@ -21,12 +21,23 @@ class _NewHabitState extends State<NewHabit> {
   var formData = <String, String>{};
   final formKey = GlobalKey<FormState>();
 
-  late final HabitsBloc bloc;
+  final days = [
+    {"day": "D"},
+    {"day": "S"},
+    {"day": "T"},
+    {"day": "Q"},
+    {"day": "Q"},
+    {"day": "S"},
+    {"day": "S"},
+  ];
+
+  late final NewHabitBloc bloc;
 
   @override
   void initState() {
     super.initState();
-    bloc = HabitsBloc();
+    bloc = NewHabitBloc();
+    bloc.add(ToggleHabitsEvent());
   }
 
   @override
@@ -57,7 +68,7 @@ class _NewHabitState extends State<NewHabit> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HabitsBloc, HabitsState>(
+    return BlocBuilder<NewHabitBloc, HabitsState>(
       bloc: bloc,
       builder: (context, state) {
         List<int> days = state.days;

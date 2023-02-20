@@ -1,28 +1,39 @@
-abstract class HabitsState {
-  List<int> days;
+// ignore_for_file: annotate_overrides, overridden_fields
 
-  HabitsState({
-    required this.days,
-  });
+abstract class HabitsState {
+  List<int> days = [];
 }
 
 class HabitsInitialState extends HabitsState {
-  HabitsInitialState() : super(days: []);
-}
-
-class LoadHabitsState extends HabitsState {
-  LoadHabitsState() : super(days: []);
+  HabitsInitialState() : super();
 }
 
 class ShowNewHabitsState extends HabitsState {
-  ShowNewHabitsState() : super(days: []);
+  ShowNewHabitsState() : super();
 }
 
 class HiddenNewHabitsState extends HabitsState {
-  HiddenNewHabitsState() : super(days: []);
+  HiddenNewHabitsState() : super();
 }
 
 class SelectedDaysState extends HabitsState {
   List<int> days;
-  SelectedDaysState({required this.days}) : super(days: days);
+  SelectedDaysState({required this.days}) : super();
+}
+
+class LoadingHabitsState extends HabitsState {
+  LoadingHabitsState() : super();
+}
+
+class LoadHabitsSucessState extends HabitsState {
+  List<dynamic> allHabits;
+  LoadHabitsSucessState({required this.allHabits}) : super();
+}
+
+class HabitsEmptyState extends HabitsState {
+  HabitsEmptyState() : super();
+}
+
+class FailHabitsState extends HabitsState {
+  FailHabitsState() : super();
 }

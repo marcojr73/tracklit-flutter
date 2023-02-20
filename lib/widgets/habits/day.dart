@@ -6,12 +6,12 @@ class Day extends StatelessWidget {
       required this.day,
       required this.index,
       required this.isSelect,
-      required this.upsertSelectedHabits});
+      this.upsertSelectedHabits});
 
   final String day;
   final int index;
   bool isSelect;
-  final void Function(int) upsertSelectedHabits;
+  final void Function(int)? upsertSelectedHabits;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,11 @@ class Day extends StatelessWidget {
       width: 45,
       height: 35,
       child: ElevatedButton(
-        onPressed: () => upsertSelectedHabits(index),
+        onPressed: () {
+          if(upsertSelectedHabits != null){
+            upsertSelectedHabits!(index);
+          }
+        }, 
         style: isSelect
             ? ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary)

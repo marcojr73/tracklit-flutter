@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         colorScheme: ColorScheme.fromSwatch().copyWith(
             background: AppColors.backgroundColor,
+            scrim: AppColors.textColor,
             primary: AppColors.primaryColor,
             secondary: AppColors.secondaryColor,
             tertiary: AppColors.lightColor),
