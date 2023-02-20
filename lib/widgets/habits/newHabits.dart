@@ -6,10 +6,13 @@ import 'package:tracklit_flutter/blocs/newHabitsBloc/habitsState.dart';
 import 'package:tracklit_flutter/models/postHabitModel.dart';
 import 'package:tracklit_flutter/repositories/habits/index.dart';
 import 'package:tracklit_flutter/utils/toasts/index.dart';
+import 'package:tracklit_flutter/widgets/habits/MyHabitsTitle.dart';
 import 'package:tracklit_flutter/widgets/habits/day.dart';
 
 class NewHabits extends StatefulWidget {
-  const NewHabits({super.key});
+  NewHabits({super.key, required this.reload});
+  void Function() reload;
+
   @override
   State<NewHabits> createState() => _NewHabitsState();
 }
@@ -36,6 +39,10 @@ class _NewHabitsState extends State<NewHabits> {
     bloc.add(SelectDayHabitEvent(day: index));
   }
 
+  void toggleShowHabits() {
+    bloc.add(ToggleHabitsEvent());
+  }
+
   void postHabit(List<int> days) async {
     formKey.currentState?.validate() ?? false;
     if (days.isEmpty) {
@@ -46,6 +53,8 @@ class _NewHabitsState extends State<NewHabits> {
       final response = await postHabitApi(data);
       if (response.statusCode == 201) {
         showSnackBar(context, "sucesso");
+        widget.reload();
+        bloc.add(ToggleHabitsEvent());
       } else {
         showSnackBar(context, response.body["message"]);
       }
@@ -60,41 +69,12 @@ class _NewHabitsState extends State<NewHabits> {
         List<int> days = state.days;
         return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Meus hábitos",
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 30),
-                    ),
-                    Container(
-                        alignment: Alignment.center,
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(5)),
-                            color: Theme.of(context).colorScheme.secondary),
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            bloc.add(ToggleHabitsEvent());
-                          },
-                        ))
-                  ]),
-            ),
+            MyHabitsTitle(toggleShowHabits: toggleShowHabits),
             if (state is ShowNewHabitsState || state is SelectedDaysState)
               Center(
                   child: Container(
                       width: MediaQuery.of(context).size.width * 0.9,
-                      height: MediaQuery.of(context).size.height * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.tertiary,
                         borderRadius: BorderRadius.circular(15),
