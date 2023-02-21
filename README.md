@@ -49,7 +49,7 @@ samples, guidance on mobile development, and a full API reference.
 
 - Flutter
 - Bloc
-- Flutter caledar
+- Flutter calendar
 - INTL
 - communication with the REST API
 - Token login
