@@ -13,7 +13,7 @@
 
 ***
 
-# Demonstração
+# Demo
 
 <p align="center">
    <img width=275 src="assets/images/demo/screen.jpg"/>
@@ -43,7 +43,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ***
 
-##	 Tecnologias e Conceitos
+##	 technologies and concepts
 
 - Flutter
 - Bloc
