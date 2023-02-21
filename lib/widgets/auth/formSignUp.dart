@@ -16,20 +16,21 @@ class FormSignUp extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   void signUp(context) async {
-    // formKey.currentState?.validate() ?? false;
+    final isValid = formKey.currentState?.validate() ?? false;
     formKey.currentState?.save();
-
-    final user = TsignUpUser(
-        email: formData["email"] as String,
-        password: formData["password"] as String,
-        name: formData["name"] as String,
-        image: formData["image"] as String);
-    final response = await signUpUser(user);
-    if (response.statusCode == 201) {
-      BlocProvider.of<AuthBloc>(context).add(TogglePage());
-      showToast("Sucesso");
-    } else {
-      showSnackBar(context, response.body["message"]);
+    if (isValid) {
+      final user = TsignUpUser(
+          email: formData["email"] as String,
+          password: formData["password"] as String,
+          name: formData["name"] as String,
+          image: formData["image"] as String);
+      final response = await signUpUser(user);
+      if (response.statusCode == 201) {
+        BlocProvider.of<AuthBloc>(context).add(TogglePage());
+        showToast("Sucesso");
+      } else {
+        showSnackBar(context, response.body["message"]);
+      }
     }
   }
 

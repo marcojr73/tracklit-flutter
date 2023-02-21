@@ -21,7 +21,7 @@ class InputForm extends StatelessWidget {
         decoration: InputDecoration(
             labelText: labelText, border: const OutlineInputBorder()),
         textInputAction: TextInputAction.next,
-        obscureText: false,
+        obscureText: type == "password" ? true : false,
         validator: (_e) {
           final e = _e ?? "";
           if (!validate(e)) return "insira um treim válido";

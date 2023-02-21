@@ -33,7 +33,7 @@ class _HabitsState extends State<Habits> {
     bloc.add(ToggleHabitsEvent());
   }
 
-  void reload(){
+  void reload() {
     bloc.add(LoadHabitsEvent());
   }
 
@@ -47,10 +47,12 @@ class _HabitsState extends State<Habits> {
           child: SingleChildScrollView(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              NewHabits(reload: reload,),
+              NewHabits(
+                reload: reload,
+              ),
               state is LoadHabitsSucessState
                   ? SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.78,
+                      height: MediaQuery.of(context).size.height * 0.7,
                       child: AllHabits(
                         allHabits: state.allHabits,
                         reload: reload,
@@ -62,7 +64,15 @@ class _HabitsState extends State<Habits> {
                           child: Center(child: CircularProgressIndicator()),
                         )
                       : state is HabitsEmptyState
-                          ? const Text("nenhum hábbito")
+                          ? Padding(
+                              padding: const EdgeInsets.all(50),
+                              child: Text(
+                                "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!",
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Theme.of(context).colorScheme.scrim),
+                              ),
+                            )
                           : Container()
             ]),
           ),

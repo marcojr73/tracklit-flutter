@@ -86,22 +86,25 @@ class _NewHabitsState extends State<NewHabits> {
                               key: formKey,
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 0, horizontal: 20),
-                                child: TextFormField(
-                                  decoration: const InputDecoration(
-                                    labelText: "Nome do hábito",
-                                    border: OutlineInputBorder(),
+                                    vertical: 10, horizontal: 20),
+                                child: Container(
+                                  height: 40,
+                                  child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      labelText: "Nome do hábito",
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    textInputAction: TextInputAction.send,
+                                    obscureText: false,
+                                    validator: (_e) {
+                                      final e = _e ?? "";
+                                      if (e.isEmpty) {
+                                        return "insira um valor válido";
+                                      }
+                                      return null;
+                                    },
+                                    onSaved: (e) => formData["name"] = e ?? "",
                                   ),
-                                  textInputAction: TextInputAction.send,
-                                  obscureText: false,
-                                  validator: (_e) {
-                                    final e = _e ?? "";
-                                    if (e.isEmpty) {
-                                      return "insira um valor válido";
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (e) => formData["name"] = e ?? "",
                                 ),
                               ),
                             ),
@@ -110,18 +113,24 @@ class _NewHabitsState extends State<NewHabits> {
                               children: [
                                 Day(
                                   day: "D",
+                                  index: 0,
+                                  isSelect: days.contains(0),
+                                  upsertSelectedHabits: upsertSelectedHabits,
+                                ),
+                                Day(
+                                  day: "S",
                                   index: 1,
                                   isSelect: days.contains(1),
                                   upsertSelectedHabits: upsertSelectedHabits,
                                 ),
                                 Day(
-                                  day: "S",
+                                  day: "T",
                                   index: 2,
                                   isSelect: days.contains(2),
                                   upsertSelectedHabits: upsertSelectedHabits,
                                 ),
                                 Day(
-                                  day: "T",
+                                  day: "Q",
                                   index: 3,
                                   isSelect: days.contains(3),
                                   upsertSelectedHabits: upsertSelectedHabits,
@@ -133,7 +142,7 @@ class _NewHabitsState extends State<NewHabits> {
                                   upsertSelectedHabits: upsertSelectedHabits,
                                 ),
                                 Day(
-                                  day: "Q",
+                                  day: "S",
                                   index: 5,
                                   isSelect: days.contains(5),
                                   upsertSelectedHabits: upsertSelectedHabits,
@@ -142,12 +151,6 @@ class _NewHabitsState extends State<NewHabits> {
                                   day: "S",
                                   index: 6,
                                   isSelect: days.contains(6),
-                                  upsertSelectedHabits: upsertSelectedHabits,
-                                ),
-                                Day(
-                                  day: "S",
-                                  index: 7,
-                                  isSelect: days.contains(7),
                                   upsertSelectedHabits: upsertSelectedHabits,
                                 ),
                               ],
@@ -169,15 +172,18 @@ class _NewHabitsState extends State<NewHabits> {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       right: 15, left: 20),
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        postHabit(days);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Theme.of(context)
-                                              .colorScheme
-                                              .secondary),
-                                      child: const Text("Salvar")),
+                                  child: SizedBox(
+                                    height: 25,
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          postHabit(days);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Theme.of(context)
+                                                .colorScheme
+                                                .secondary),
+                                        child: const Text("Salvar")),
+                                  ),
                                 )
                               ],
                             )

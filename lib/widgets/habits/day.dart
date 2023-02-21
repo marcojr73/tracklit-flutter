@@ -16,7 +16,7 @@ class Day extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 45,
+      width: 35,
       height: 35,
       child: ElevatedButton(
         onPressed: () {

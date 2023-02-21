@@ -37,7 +37,7 @@ class _AllHabitsState extends State<AllHabits> {
   void deleteHabit(context, int index) async {
     final response = await deleteHabitApi(index);
     if (response.statusCode == 204) {
-      showSnackBar(context, "sucess");
+      showSnackBar(context, "Deletado");
       widget.reload();
     } else {
       showSnackBar(context, response.body["message"]);
@@ -74,53 +74,53 @@ class _AllHabitsState extends State<AllHabits> {
                       Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                            padding: const EdgeInsets.symmetric(horizontal: 1.5),
                             child: Day(
                                 day: "D",
+                                index: 0,
+                                isSelect: habit["days"].contains(0)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 1.5),
+                            child: Day(
+                                day: "S",
                                 index: 1,
                                 isSelect: habit["days"].contains(1)),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                            padding: const EdgeInsets.symmetric(horizontal: 1.5),
                             child: Day(
-                                day: "S",
+                                day: "T",
                                 index: 2,
                                 isSelect: habit["days"].contains(2)),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                            padding: const EdgeInsets.symmetric(horizontal: 1.5),
                             child: Day(
-                                day: "T",
+                                day: "Q",
                                 index: 3,
                                 isSelect: habit["days"].contains(3)),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                            padding: const EdgeInsets.symmetric(horizontal: 1.5),
                             child: Day(
                                 day: "Q",
                                 index: 4,
                                 isSelect: habit["days"].contains(4)),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                            padding: const EdgeInsets.symmetric(horizontal: 1.5),
                             child: Day(
-                                day: "Q",
+                                day: "S",
                                 index: 5,
                                 isSelect: habit["days"].contains(5)),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                            padding: const EdgeInsets.symmetric(horizontal: 1.5),
                             child: Day(
                                 day: "S",
                                 index: 6,
                                 isSelect: habit["days"].contains(6)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 3),
-                            child: Day(
-                                day: "S",
-                                index: 7,
-                                isSelect: habit["days"].contains(7)),
                           ),
                         ],
                       )

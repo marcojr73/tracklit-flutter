@@ -21,7 +21,8 @@ dependencies:
   http: ^0.13.5
   fluttertoast: ^8.1.2
   shared_preferences: ^2.0.15
-  intl: ^0.18.0
+  intl: ^0.17.0
+  table_calendar: ^3.0.4
 
 dev_dependencies:
   flutter_test:
@@ -36,7 +37,8 @@ flutter:
 
   assets:
     - assets/images/logo.png
-    - assets/images/Karma_0.jpg
+    - assets/images/spongebob-sky-theory.jpg
+    - assets/images/unnamed.jpg
     - .env
 
   fonts:

@@ -29,7 +29,7 @@ class _TodayState extends State<Today> {
     super.dispose();
   }
 
-  void reload(){
+  void reload() {
     bloc.add(ToDayLoadHabitsEvent());
   }
 
@@ -45,33 +45,44 @@ class _TodayState extends State<Today> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).colorScheme.background,
-      child: BlocBuilder<ToDayBloc, ToDayStates>(
-        bloc: bloc,
-        builder: (context, state) {
-          if (state is ToDaySuccessState) {
-            final percentDone = percentDoneCalc(state.toDayHabits);
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ToDayTitle(
-                  percent: percentDone,
+    return SingleChildScrollView(
+      child: Container(
+        color: Theme.of(context).colorScheme.background,
+        child: BlocBuilder<ToDayBloc, ToDayStates>(
+          bloc: bloc,
+          builder: (context, state) {
+            if (state is ToDaySuccessState) {
+              final percentDone = percentDoneCalc(state.toDayHabits);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ToDayTitle(
+                    percent: percentDone,
+                  ),
+                  ToDayHabits(
+                    toDayHabits: state.toDayHabits,
+                    reload: reload,
+                  )
+                ],
+              );
+            } else if (state is ToDayLoadingState) {
+              return const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 0, vertical: 100),
+                  child: Center(child: CircularProgressIndicator()));
+            } else if (state is ToDayEmptyState) {
+              return Padding(
+                padding: const EdgeInsets.all(50),
+                child: Text(
+                  "Você não tem nenhum hábito para hoje. Adicione um hábito para começar a trackear!",
+                  style: TextStyle(
+                      fontSize: 25, color: Theme.of(context).colorScheme.scrim),
                 ),
-                ToDayHabits(habits: state.toDayHabits, reload: reload,)
-              ],
-            );
-          } else if (state is ToDayLoadingState) {
-            return const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 100),
-                child: Center(child: CircularProgressIndicator()));
-          } else if (state is ToDayEmptyState) {
-            return const Text(
-                "Você não tem nenhum hábito para hoje. Adicione um hábito para começar a trackear!");
-          } else {
-            return const Text("lugar nenhum");
-          }
-        },
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
       ),
     );
   }

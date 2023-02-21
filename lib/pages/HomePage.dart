@@ -28,33 +28,33 @@ class _HomePageState extends State<HomePage> {
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
+            children: const [
+              Text(
                 "Tracklit",
                 style: TextStyle(fontFamily: "Playball", fontSize: 40),
               ),
-              ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(100)),
-                child: Image.asset(
-                  "assets/images/Karma_0.jpg",
-                  width: 50,
-                ),
-              ),
+              CircleAvatar(
+                backgroundImage: AssetImage("assets/images/unnamed.jpg"),
+                radius: 25,
+              )
             ],
           ),
         ),
-        body: PageView(
-          controller: pageController,
-          children: const [
-            Habits(),
-            Today(),
-            Historic(),
-          ],
-          onPageChanged: (page) {
-            setState(() {
-              selectedScreenIndex = page;
-            });
-          },
+        body: Container(
+          color: Theme.of(context).colorScheme.background,
+          child: PageView(
+            controller: pageController,
+            children: const [
+              Habits(),
+              Today(),
+              Historic(),
+            ],
+            onPageChanged: (page) {
+              setState(() {
+                selectedScreenIndex = page;
+              });
+            },
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (page) {

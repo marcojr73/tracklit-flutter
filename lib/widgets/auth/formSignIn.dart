@@ -16,20 +16,22 @@ class FormSignIn extends StatelessWidget {
   final _passwordFocus = FocusNode();
 
   void signIn(context) async {
-    // final isValid = formKey.currentState?.validate() ?? false; 
-    // formKey.currentState?.save();
+    final isValid = formKey.currentState?.validate() ?? false;
+    if (isValid) {
+      formKey.currentState?.save();
 
-    // final user = TsignInUser(
-    //     email: formData["email"] as String,
-    //     password: formData["password"] as String);
-    // final response = await signInUser(user);
-    // if (response.statusCode == 200) {
-    //   final prefs = await SharedPreferences.getInstance();
-    //   await prefs.setString("token", response.body["token"]);
-      Navigator.of(context).pushNamed(AppRouter.home);
-    // } else {
-    //   showSnackBar(context, response.body["message"]);
-    // }
+      final user = TsignInUser(
+          email: formData["email"] as String,
+          password: formData["password"] as String);
+      final response = await signInUser(user);
+      if (response.statusCode == 200) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString("token", response.body["token"]);
+        Navigator.of(context).pushNamed(AppRouter.home);
+      } else {
+        showSnackBar(context, response.body["message"]);
+      }
+    }
   }
 
   @override
@@ -49,7 +51,7 @@ class FormSignIn extends StatelessWidget {
             },
             validator: (_email) {
               final email = _email ?? "";
-              if(!isValidEmail(email)) return "insira um email válido";
+              if (!isValidEmail(email)) return "insira um email válido";
               return null;
             },
             onSaved: (e) => formData["email"] = e ?? "",
@@ -62,10 +64,13 @@ class FormSignIn extends StatelessWidget {
                 labelText: "Password", border: OutlineInputBorder()),
             textInputAction: TextInputAction.done,
             focusNode: _passwordFocus,
-            obscureText: false,
+            obscureText: true,
             validator: (_password) {
               final password = _password ?? "";
-              if(password.trim().length < 8) return "Sua senha precisa ter no mínimo 8 caracteres";
+              if (password.trim().length < 8) {
+                return "Sua senha precisa ter no mínimo 8 caracteres";
+              }
+              return null;
             },
             onSaved: (e) => formData["password"] = e ?? "",
           ),
