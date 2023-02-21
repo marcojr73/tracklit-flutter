@@ -28,6 +28,8 @@
 ***
 # How to usage
 
+- Set the variable "APIURL" in .env as "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit"
+
 A new Flutter project.
 
 This project is a starting point for a Flutter application.
