@@ -26,7 +26,6 @@ class _HistoricState extends State<Historic> {
   bool isAllDone(day, List<dynamic> allEvents) {
     day = DateFormat("yyyy-MM-dd").format(day);
     List eventsDaysDone = organizeEvents(allEvents);
-    print(eventsDaysDone);
     for (var event in eventsDaysDone) {
       if (event == day) {
         return true;
@@ -36,7 +35,19 @@ class _HistoricState extends State<Historic> {
   }
 
   List organizeEvents(List events) {
-    List ans = ["2023-02-20", "2023-02-18", "2023-02-16", "2023-02-15", "2023-02-14", "2023-02-13", "2023-02-11", "2023-02-08","2023-02-06", "2023-02-05", "2023-02-0",];
+    List ans = [
+      "2023-02-20",
+      "2023-02-18",
+      "2023-02-16",
+      "2023-02-15",
+      "2023-02-14",
+      "2023-02-13",
+      "2023-02-11",
+      "2023-02-08",
+      "2023-02-06",
+      "2023-02-05",
+      "2023-02-0",
+    ];
     for (var event in events) {
       var count = 0;
       for (var habit in event["habits"]) {
@@ -44,7 +55,7 @@ class _HistoricState extends State<Historic> {
           count++;
         }
       }
-      
+
       if (count == event["habits"].length) {
         DateTime parser = DateTime.parse(event["habits"][0]["date"]);
         ans.add(DateFormat("yyyy-MM-dd").format(parser));
@@ -132,7 +143,7 @@ class _HistoricState extends State<Historic> {
                         alignment: Alignment.center,
                         children: [
                           Positioned(
-                              bottom: 2.0,
+                              bottom: 6.0,
                               child: Container(
                                 height: 15,
                                 width: 15,
@@ -144,24 +155,62 @@ class _HistoricState extends State<Historic> {
                               ))
                         ],
                       );
+                    } else if(day.isBefore(focusedDay)) {
+                      return Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Positioned(
+                              bottom: 6.0,
+                              child: Container(
+                                height: 15,
+                                width: 15,
+                                decoration: const BoxDecoration(
+                                    color: Colors.amber,
+                                    shape: BoxShape.rectangle,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15))),
+                              ))
+                        ],
+                      );
                     }
                   }),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, bottom: 35, top: 25),
+                  padding: const EdgeInsets.only(left: 20, bottom: 20, top: 25),
                   child: Row(
                     children: [
                       Container(
-                        width: 50,
-                        height: 50,
+                        width: 35,
+                        height: 35,
                         decoration: const BoxDecoration(
-                        color: AppColors.green,
-                        borderRadius: BorderRadius.all(Radius.circular(25))
-                        ),
+                            color: AppColors.green,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25))),
                       ),
                       const Padding(
                         padding: EdgeInsets.only(left: 10),
-                        child: Text("Dias em que você concluiu todos os hábitos"),
+                        child:
+                            Text("Dias em que você concluiu todos os hábitos"),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, bottom: 20),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 35,
+                        height: 35,
+                        decoration: const BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius:
+                                BorderRadius.all(Radius.circular(25))
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text("Dias em que você não concluiu todos os hábitos"),
                       )
                     ],
                   ),
@@ -171,10 +220,10 @@ class _HistoricState extends State<Historic> {
                   child: Row(
                     children: [
                       Container(
-                        width: 50,
-                        height: 50,
+                        width: 35,
+                        height: 35,
                         decoration: const BoxDecoration(
-                        color: Colors.amber,
+                          color: Colors.amber,
                         ),
                       ),
                       const Padding(
