@@ -35,19 +35,7 @@ class _HistoricState extends State<Historic> {
   }
 
   List organizeEvents(List events) {
-    List ans = [
-      "2023-02-20",
-      "2023-02-18",
-      "2023-02-16",
-      "2023-02-15",
-      "2023-02-14",
-      "2023-02-13",
-      "2023-02-11",
-      "2023-02-08",
-      "2023-02-06",
-      "2023-02-05",
-      "2023-02-0",
-    ];
+    List ans = [];
     for (var event in events) {
       var count = 0;
       for (var habit in event["habits"]) {
@@ -155,7 +143,7 @@ class _HistoricState extends State<Historic> {
                               ))
                         ],
                       );
-                    } else if(day.isBefore(focusedDay)) {
+                    } else if (day.isBefore(focusedDay)) {
                       return Stack(
                         alignment: Alignment.center,
                         children: [
@@ -203,14 +191,14 @@ class _HistoricState extends State<Historic> {
                         width: 35,
                         height: 35,
                         decoration: const BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius:
-                                BorderRadius.all(Radius.circular(25))
-                        ),
+                            color: Colors.amber,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25))),
                       ),
                       const Padding(
                         padding: EdgeInsets.all(10),
-                        child: Text("Dias em que você não concluiu todos os hábitos"),
+                        child: Text(
+                            "Dias em que você não concluiu todos os hábitos"),
                       )
                     ],
                   ),
