@@ -10,6 +10,8 @@
 - Na tela de "Hoje" você consegue: visualizar quais hábitos você tem para praticar, marcar ou desmarcar como feito um hábito
 - A aplicação conta com um calendário onde é possível visulizar seu histórico, quais dias você conseguiu ou não praticar todos os hábitos 
 
+- [veja meu repositório back end desta aplicação aqui](https://github.com/marcojr73/tracklit-NESTJS)
+
 
 ***
 
