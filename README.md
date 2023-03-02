@@ -5,7 +5,7 @@
    <img width=350 src="assets/images/logo.png"/>
 </p>
 
-- Esta é uma aplicação web onde você pode gerenciar os seus hábitos
+- Esta é uma aplicação mobile onde você pode gerenciar os seus hábitos
 - Você pode criar um hábido, selecionar quais dias você os quer praticar
 - Na tela de "Hoje" você consegue: visualizar quais hábitos você tem para praticar, marcar ou desmarcar como feito um hábito
 - A aplicação conta com um calendário onde é possível visulizar seu histórico, quais dias você conseguiu ou não praticar todos os hábitos 
